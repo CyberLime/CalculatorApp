@@ -1,8 +1,6 @@
 document.body.className = localStorage.getItem("theme");
 
-if(document.body.className != "th1" || document.body.className != "th2" || document.body.className != "th3") {
-  document.body.className = "th1";
-}
+if(document.body.className != "th1" && document.body.className != "th2" && document.body.className != "th3") document.body.className = "th1";
 
 let toggle = document.querySelector(".toggle");
 toggle.addEventListener("click", () => {
