@@ -3,13 +3,15 @@ let buttons = document.querySelector(".buttons");
 
 calcscreen.addEventListener("keydown", (e) => e.preventDefault());
 calcscreen.addEventListener("mousedown", (e) => e.preventDefault());
-buttons.addEventListener("mousedown", buttonsFunc);
-document.addEventListener("keydown", keyFunc);
+buttons.addEventListener("mousedown", keypadFunc);
+document.addEventListener("keydown", keyboardFunc);
 
-function buttonsFunc(e) {
-  if(e.pointerId == -1) return;
+function keypadFunc(e) {
+  //Prevent keypad from reacting to Enter key
+  if (e.pointerId == -1) return;
   //Numbers validate
-  if (!e.target.className && (calcscreen.value == "0" || calcscreen.value == NaN || calcscreen.value == Infinity)) calcscreen.value = e.target.value; //If the value is 0 and user types 0, then the value becomes 0 again
+  if (!e.target.className && (calcscreen.value == "0" || calcscreen.value == "NaN" || calcscreen.value == "Infinity")) calcscreen.value = e.target.value; //If the value is 0 and user types 0, then the value becomes 0 again
+  else if (!e.target.className && calcscreen.value.match(/(?=[+-x/])[\d.]*/g)[calcscreen.value.split("").filter(e => e == "+" || e == "-" || e == "/" || e == "x").length * 2] == "0") calcscreen.value = calcscreen.value.substring(0, calcscreen.value.length - 1) + e.target.className;
   else if (!e.target.className) calcscreen.value += e.target.value;
 
   //Deletion functionality
@@ -38,10 +40,11 @@ function buttonsFunc(e) {
   if (e.target.value == "=") calcscreen.value = result();
 }
 
-function keyFunc(e) {
+function keyboardFunc(e) {
   //Numbers validate
   let chars = "1234567890";
-  if (chars.indexOf(e.key) != -1 && (calcscreen.value == "0" || calcscreen.value == NaN || calcscreen.value == Infinity)) calcscreen.value = e.key; //If the value is 0 and user types 0, then the value becomes 0 again
+  if (chars.indexOf(e.key) != -1 && (calcscreen.value == "0" || calcscreen.value == "NaN" || calcscreen.value == "Infinity")) calcscreen.value = e.key; //If the value is 0 and user types 0, then the value becomes 0 again
+  else if (chars.indexOf(e.key) != -1 && calcscreen.value.match(/(?=[+-x/])[\d.]*/g)[calcscreen.value.split("").filter(e => e == "+" || e == "-" || e == "/" || e == "x").length * 2] == "0") calcscreen.value = calcscreen.value.substring(0, calcscreen.value.length - 1) + e.key;
   else if (chars.indexOf(e.key) != -1) calcscreen.value += e.key;
 
   //Deletion functionality
