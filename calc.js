@@ -11,7 +11,7 @@ function keypadFunc(e) {
   if (e.pointerId == -1) return;
   //Numbers validate
   if (!e.target.className && (calcscreen.value == "0" || calcscreen.value == "NaN" || calcscreen.value == "Infinity")) calcscreen.value = e.target.value; //If the value is 0 and user types 0, then the value becomes 0 again
-  else if (!e.target.className && calcscreen.value.match(/(?=[+-x/])[\d.]*/g)[calcscreen.value.split("").filter(e => e == "+" || e == "-" || e == "/" || e == "x").length * 2] == "0") calcscreen.value = calcscreen.value.substring(0, calcscreen.value.length - 1) + e.target.className;
+  else if (!e.target.className && (calcscreen.value.match(/(?=[+-x/])[\d.]*/g)[calcscreen.value.split("").filter(e => e == "+" || e == "-" || e == "/" || e == "x").length * 2] == "0")) calcscreen.value = calcscreen.value.substring(0, calcscreen.value.length - 1) + e.target.value;
   else if (!e.target.className) calcscreen.value += e.target.value;
 
   //Deletion functionality
